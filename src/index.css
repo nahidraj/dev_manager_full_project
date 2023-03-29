@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
+  background: #eee8e4;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  font-family: 'Lobster', cursive;
+  font-size: 24px;
+}
+
+.contact-title {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.card_list {
+  min-height: 600px;
+}
+
+.react-datepicker-popper .react-datepicker__triangle::before {
+  display: none;
+}
+
+.react-datepicker-popper .react-datepicker__triangle::after {
+  display: none;
+}
