@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import { BsFillEyeFill, BsFillTrash3Fill } from "react-icons/bs";
+import { format } from "date-fns";
 
 const Contact = ({ contact, deleteContact }) => {
   const {
@@ -28,7 +29,12 @@ const Contact = ({ contact, deleteContact }) => {
       <ListGroup className="list-group-flush">
         <ListGroup.Item>Email: {email}</ListGroup.Item>
         <ListGroup.Item>Gender: {gender}</ListGroup.Item>
-        <ListGroup.Item>Dob: {dateOfBirth}</ListGroup.Item>
+        <ListGroup.Item>
+          Dob:{" "}
+          {dateOfBirth instanceof Object
+            ? format(dateOfBirth, "dd/MM/yyyy")
+            : dateOfBirth}
+        </ListGroup.Item>
       </ListGroup>
       <Card.Footer>
         <Card.Link href="#">

@@ -1,5 +1,5 @@
 import React from "react";
-import Contact from "./Contact";
+import Contact from "../components/conatcts/Contact";
 import { Row, Col } from "react-bootstrap";
 
 const Contacts = ({ contacts, deleteContact }) => {
@@ -10,10 +10,7 @@ const Contacts = ({ contacts, deleteContact }) => {
         <Row>
           {contacts.map((contact) => (
             <Col lg="3" key={contact.id}>
-              <Contact
-                deleteContact={deleteContact}
-                contact={contact}
-              />
+              <Contact deleteContact={deleteContact} contact={contact} />
             </Col>
           ))}
         </Row>

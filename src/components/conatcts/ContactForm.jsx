@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   firstName: yup
@@ -32,18 +33,7 @@ const schema = yup.object({
     .max(300, "Bio must be greater than 300"),
 });
 
-const AddContact = ({ addContact }) => {
-  // const [contact, setContact] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   gender: "male",
-  //   profession: "",
-  //   image: "",
-  //   dateOfBirth: new Date(),
-  //   bio: "",
-  // });
-
+const ContactForm = ({ addContact, updateContact, contact }) => {
   const {
     register,
     handleSubmit,
@@ -53,6 +43,20 @@ const AddContact = ({ addContact }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const defaultValue = {
+    first_name: contact?.firstName || "",
+    last_name: contact?.lastName || "",
+    email: contact?.email || "",
+    gender: contact?.gender || "",
+    profession: contact?.profession || "",
+    image: contact?.image || "",
+    dateOfBirth: contact?.dateOfBirth || "",
+    bio: contact?.bio || "",
+  };
+
+  const { firstName, lastName, email, gender, profession, bio, image } =
+    defaultValue;
 
   const [birthYear, setBirthYear] = useState(new Date());
 
@@ -75,20 +79,45 @@ const AddContact = ({ addContact }) => {
     }
   }, [isSubmitSuccessful]);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    // adding contacts
+    addContact(data);
+    toast.success("Contact added successfully", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
 
   return (
     <div className="mt-5">
-      <h2>Add Contact</h2>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <h2>{contact?.id ? "Edit Contact" : "Add Contact"}</h2>
       <Form className="mt-5" onSubmit={handleSubmit(onSubmit)} noValidate>
         <Row>
           <Col lg="6">
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>First Name</Form.Label>
               <Form.Control
+                defaultValue={firstName}
                 className="shadow-none"
                 type="text"
-                defaultValue=""
                 {...register("firstName")}
                 placeholder="Enter your first name"
                 isInvalid={errors?.firstName}
@@ -105,7 +134,7 @@ const AddContact = ({ addContact }) => {
               <Form.Control
                 className="shadow-none"
                 type="text"
-                defaultValue=""
+                defaultValue={lastName}
                 {...register("lastName")}
                 placeholder="Enter your last name"
                 isInvalid={errors?.lastName}
@@ -122,7 +151,7 @@ const AddContact = ({ addContact }) => {
               <Form.Control
                 className="shadow-none"
                 type="email"
-                defaultValue=""
+                defaultValue={email}
                 {...register("email")}
                 placeholder="Enter your email"
                 isInvalid={errors?.email}
@@ -143,6 +172,7 @@ const AddContact = ({ addContact }) => {
                 value="male"
                 id="male"
                 label="Male"
+                defaultChecked={gender === "male"}
                 {...register("gender")}
               />
               <Form.Check
@@ -152,6 +182,7 @@ const AddContact = ({ addContact }) => {
                 value="female"
                 id="female"
                 label="Female"
+                defaultChecked={gender === "female"}
                 {...register("gender")}
               />
             </div>
@@ -166,7 +197,7 @@ const AddContact = ({ addContact }) => {
               <Form.Control
                 className="shadow-none"
                 type="text"
-                defaultValue=""
+                defaultValue={image}
                 {...register("image")}
                 placeholder="Enter your image url"
                 isInvalid={errors?.image}
@@ -180,14 +211,19 @@ const AddContact = ({ addContact }) => {
           <Col lg="6">
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Profession</Form.Label>
-              <Form.Control
-                className="shadow-none"
-                type="text"
-                defaultValue=""
-                {...register("profession")}
-                placeholder="Enter your profession"
+
+              <Form.Select
                 isInvalid={errors?.profession}
-              />
+                {...register("profession")}
+                className="shadow-none"
+                defaultValue={profession}
+              >
+                <option value="">Select the profession</option>
+                <option value="developer">Developer</option>
+                <option value="designer">Designer</option>
+                <option value="marketer">Marketer</option>
+              </Form.Select>
+
               <Form.Control.Feedback type="invalid">
                 {errors?.profession?.message}
               </Form.Control.Feedback>
@@ -195,6 +231,7 @@ const AddContact = ({ addContact }) => {
           </Col>
 
           <Col lg="6">
+            <Form.Label>Date of birth</Form.Label>
             <DatePicker
               className="date_picker form-control shadow-none"
               selected={birthYear}
@@ -211,7 +248,7 @@ const AddContact = ({ addContact }) => {
               <Form.Label>Bio</Form.Label>
               <Form.Control
                 as="textarea"
-                defaultValue=""
+                defaultValue={bio}
                 {...register("bio")}
                 placeholder="Enter your bio"
                 isInvalid={errors?.bio}
@@ -227,11 +264,11 @@ const AddContact = ({ addContact }) => {
           type="submit"
           disabled={isSubmitting && "disabled"}
         >
-          Add Contact
+          {contact?.id ? "Update Contact" : "Add Contact"}
         </Button>
       </Form>
     </div>
   );
 };
 
-export default AddContact;
+export default ContactForm;
