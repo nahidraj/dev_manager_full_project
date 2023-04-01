@@ -14,8 +14,8 @@ import NotFound from "./pages/NotFound";
 const initialContacts = [
   {
     id: "1",
-    first_name: "Hilary",
-    last_name: "Cromb",
+    firstName: "Hilary",
+    lastName: "Cromb",
     email: "hcromb0@amazon.com",
     gender: "male",
     profession: "VP Quality Control",
@@ -26,10 +26,10 @@ const initialContacts = [
   },
   {
     id: "2",
-    first_name: "Nanine",
-    last_name: "Grabham",
+    firstName: "Nanine",
+    lastName: "Grabham",
     email: "ngrabham1@arizona.edu",
-    gender: "Female",
+    gender: "female",
     profession: "Analog Circuit Design manager",
     image:
       "https://images.pexels.com/photos/343717/pexels-photo-343717.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -38,10 +38,10 @@ const initialContacts = [
   },
   {
     id: "3",
-    first_name: "Suzette",
-    last_name: "Turn",
+    firstName: "Suzette",
+    lastName: "Turn",
     email: "sturn2@theguardian.com",
-    gender: "Female",
+    gender: "female",
     profession: "Senior Editor",
     image:
       "https://images.pexels.com/photos/343717/pexels-photo-343717.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -50,8 +50,8 @@ const initialContacts = [
   },
   {
     id: "4",
-    first_name: "Calv",
-    last_name: "Branchflower",
+    firstName: "Calv",
+    lastName: "Branchflower",
     email: "cbranchflower3@google.ca",
     gender: "male",
     profession: "Recruiter",
@@ -62,8 +62,8 @@ const initialContacts = [
   },
   {
     id: "5",
-    first_name: "Connor",
-    last_name: "Cromb",
+    firstName: "Connor",
+    lastName: "Cromb",
     email: "ccromb4@slashdot.org",
     gender: "male",
     profession: "Research Associate",
@@ -74,8 +74,8 @@ const initialContacts = [
   },
   {
     id: "6",
-    first_name: "Filip",
-    last_name: "Scutching",
+    firstName: "Filip",
+    lastName: "Scutching",
     email: "fscutching5@chicago.com",
     gender: "male",
     profession: "Chief Design Engineer",
@@ -86,8 +86,8 @@ const initialContacts = [
   },
   {
     id: "7",
-    first_name: "Amby",
-    last_name: "Culleton",
+    firstName: "Amby",
+    lastName: "Culleton",
     email: "aculleton6@phpbb.com",
     gender: "male",
     profession: "Project Manager",
@@ -98,8 +98,8 @@ const initialContacts = [
   },
   {
     id: "8",
-    first_name: "Silvester",
-    last_name: "Ivashnikov",
+    firstName: "Silvester",
+    lastName: "Ivashnikov",
     email: "sivashnikov7@mayoclinic.com",
     gender: "male",
     profession: "Programmer III",

@@ -45,11 +45,11 @@ const ContactForm = ({ addContact, updateContact, contact }) => {
   });
 
   const defaultValue = {
-    first_name: contact?.firstName || "",
-    last_name: contact?.lastName || "",
+    firstName: contact?.firstName || "",
+    lastName: contact?.lastName || "",
     email: contact?.email || "",
     gender: contact?.gender || "",
-    profession: contact?.profession || "",
+    profession: contact?.profession || "Developer",
     image: contact?.image || "",
     dateOfBirth: contact?.dateOfBirth || "",
     bio: contact?.bio || "",
@@ -213,10 +213,10 @@ const ContactForm = ({ addContact, updateContact, contact }) => {
               <Form.Label>Profession</Form.Label>
 
               <Form.Select
+                defaultValue={profession}
                 isInvalid={errors?.profession}
                 {...register("profession")}
                 className="shadow-none"
-                defaultValue={profession}
               >
                 <option value="">Select the profession</option>
                 <option value="developer">Developer</option>
