@@ -44,16 +44,20 @@ const ContactForm = ({ addContact, updateContact, contact }) => {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate();
+
   const defaultValue = {
     firstName: contact?.firstName || "",
     lastName: contact?.lastName || "",
     email: contact?.email || "",
     gender: contact?.gender || "",
-    profession: contact?.profession || "Developer",
+    profession: contact?.profession || "",
     image: contact?.image || "",
-    dateOfBirth: contact?.dateOfBirth || "",
+    dateOfBirth: contact?.dateOfBirth || new Date(),
     bio: contact?.bio || "",
   };
+
+  console.log(contact);
 
   const { firstName, lastName, email, gender, profession, bio, image } =
     defaultValue;
@@ -80,34 +84,20 @@ const ContactForm = ({ addContact, updateContact, contact }) => {
   }, [isSubmitSuccessful]);
 
   const onSubmit = (data) => {
-    // adding contacts
-    addContact(data);
-    toast.success("Contact added successfully", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    const id = contact?.id;
+    if (id) {
+      updateContact(data, id);
+      toast.success("Contact Updated successfully");
+    } else {
+      // adding contacts
+      addContact(data);
+      toast.success("Contact added successfully");
+    }
+    navigate("/contacts");
   };
 
   return (
     <div className="mt-5">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <h2>{contact?.id ? "Edit Contact" : "Add Contact"}</h2>
       <Form className="mt-5" onSubmit={handleSubmit(onSubmit)} noValidate>
         <Row>

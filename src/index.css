@@ -39,3 +39,7 @@ h1, h2, h3, h4, h5, h6, p {
 .react-datepicker-popper .react-datepicker__triangle::after {
   display: none;
 }
+
+.card-details {
+  min-height: auto !important;
+}

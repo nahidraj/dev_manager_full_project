@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 const EditContact = ({ contacts, updateContact }) => {
   const { id } = useParams();
   const foundContact = contacts.find((contact) => contact.id === id);
+  console.log(foundContact);
   return <ContactForm contact={foundContact} updateContact={updateContact} />;
 };
 
