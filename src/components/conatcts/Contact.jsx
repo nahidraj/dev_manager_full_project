@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import { BsFillEyeFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/Ai";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { ContactContext } from "../../context/ContactsContext";
 
-const Contact = ({ contact, deleteContact }) => {
+const Contact = ({ contact }) => {
+  const { deleteContact } = useContext(ContactContext);
+
   const {
     id,
     firstName,

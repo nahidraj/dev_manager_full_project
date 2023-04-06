@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
@@ -56,8 +56,6 @@ const ContactForm = ({ addContact, updateContact, contact }) => {
     dateOfBirth: contact?.dateOfBirth || new Date(),
     bio: contact?.bio || "",
   };
-
-  console.log(contact);
 
   const { firstName, lastName, email, gender, profession, bio, image } =
     defaultValue;

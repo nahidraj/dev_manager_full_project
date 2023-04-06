@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import ContactForm from "../components/conatcts/ContactForm";
 import { useParams } from "react-router-dom";
+import { ContactContext } from "../context/ContactsContext";
 
-const EditContact = ({ contacts, updateContact }) => {
+const EditContact = () => {
+  const { contacts, updateContact } = useContext(ContactContext);
+
   const { id } = useParams();
   const foundContact = contacts.find((contact) => contact.id === id);
   console.log(foundContact);

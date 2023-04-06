@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Contact from "../components/conatcts/Contact";
 import { Row, Col } from "react-bootstrap";
+import { ContactContext } from "../context/ContactsContext";
 
-const Contacts = ({ contacts, deleteContact }) => {
+const Contacts = () => {
+  const {contacts} = useContext(ContactContext)
+
   return (
     <>
       {Object.keys(contacts).length === 0 ? (
@@ -19,7 +22,7 @@ const Contacts = ({ contacts, deleteContact }) => {
             <Row>
               {contacts.map((contact) => (
                 <Col lg="3" key={contact.id}>
-                  <Contact deleteContact={deleteContact} contact={contact} />
+                  <Contact contact={contact} />
                 </Col>
               ))}
             </Row>

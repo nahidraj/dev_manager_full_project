@@ -6,9 +6,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { ContactProvider } from "./context/ContactsContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <App />
+    <ContactProvider>
+      <App />
+    </ContactProvider>
   </BrowserRouter>
 );
