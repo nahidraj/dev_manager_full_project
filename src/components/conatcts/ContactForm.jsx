@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ContactContext } from "../../context/ContactsContext";
+import FormInput from "../form/FormInput";
 
 const schema = yup.object({
   firstName: yup
@@ -33,7 +35,8 @@ const schema = yup.object({
     .max(300, "Bio must be greater than 300"),
 });
 
-const ContactForm = ({ addContact, updateContact, contact }) => {
+const ContactForm = ({ contact }) => {
+  const { addContact, updateContact } = useContext(ContactContext);
   const {
     register,
     handleSubmit,
@@ -94,166 +97,153 @@ const ContactForm = ({ addContact, updateContact, contact }) => {
     navigate("/contacts");
   };
 
+  const fields = [
+    {
+      name: "firstName",
+      type: "text",
+      label: "First Name",
+      placeholder: "Enter your First name",
+      defaultValue: firstName,
+    },
+    {
+      name: "lastName",
+      type: "text",
+      label: "Last Name",
+      placeholder: "Enter your Last name",
+      defaultValue: lastName,
+    },
+    {
+      name: "email",
+      type: "email",
+      label: "Email Address",
+      placeholder: "Enter your Email Addres",
+      defaultValue: email,
+    },
+  ];
+
   return (
-    <div className="mt-5">
-      <h2>{contact?.id ? "Edit Contact" : "Add Contact"}</h2>
+    <div className="my-5">
+      <h2>{contact?.id ? "Edit Contact" : ""}</h2>
       <Form className="mt-5" onSubmit={handleSubmit(onSubmit)} noValidate>
         <Row>
-          <Col lg="6">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                defaultValue={firstName}
-                className="shadow-none"
-                type="text"
-                {...register("firstName")}
-                placeholder="Enter your first name"
-                isInvalid={errors?.firstName}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors?.firstName?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
+          <Col lg={6} className="mx-auto">
+            <div className="shadow p-4 bg-white">
+              <h2 className="mb-4 text-center">Add Contact</h2>
+              <Row>
+                {fields.map((field, index) => (
+                  <Col lg="12" key={index}>
+                    <FormInput
+                      name={field.name}
+                      type={field.type}
+                      label={field.label}
+                      placeholder={field.placeholder}
+                      defaultValue={field.defaultValue}
+                      register={register}
+                      errors={errors}
+                    />
+                  </Col>
+                ))}
 
-          <Col lg="6">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                className="shadow-none"
-                type="text"
-                defaultValue={lastName}
-                {...register("lastName")}
-                placeholder="Enter your last name"
-                isInvalid={errors?.lastName}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors?.lastName?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
+                <Col lg="12">
+                  <Form.Label>Select Gender</Form.Label>
+                  <div className="check-box mb-3">
+                    <Form.Check
+                      className="shadow-none"
+                      inline
+                      type="radio"
+                      value="male"
+                      id="male"
+                      label="Male"
+                      defaultChecked={gender === "male"}
+                      {...register("gender")}
+                    />
+                    <Form.Check
+                      className="shadow-none ms-2"
+                      inline
+                      type="radio"
+                      value="female"
+                      id="female"
+                      label="Female"
+                      defaultChecked={gender === "female"}
+                      {...register("gender")}
+                    />
 
-          <Col lg="6">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                className="shadow-none"
-                type="email"
-                defaultValue={email}
-                {...register("email")}
-                placeholder="Enter your email"
-                isInvalid={errors?.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors?.email?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
+                    <Form.Control.Feedback type="invalid" className="d-block">
+                      {errors?.gender?.message}
+                    </Form.Control.Feedback>
+                  </div>
+                </Col>
 
-          <Col lg="6">
-            <Form.Label>Select Gender</Form.Label>
-            <div className="check-box">
-              <Form.Check
-                className="shadow-none"
-                inline
-                type="radio"
-                value="male"
-                id="male"
-                label="Male"
-                defaultChecked={gender === "male"}
-                {...register("gender")}
-              />
-              <Form.Check
-                className="shadow-none ms-2"
-                inline
-                type="radio"
-                value="female"
-                id="female"
-                label="Female"
-                defaultChecked={gender === "female"}
-                {...register("gender")}
-              />
-            </div>
-            <Form.Control.Feedback type="invalid" className="d-block">
-              {errors?.gender?.message}
-            </Form.Control.Feedback>
-          </Col>
+                <Col lg="12">
+                  <FormInput
+                    name="image"
+                    type="url"
+                    label="Profile picture"
+                    placeholder="Enter your image url"
+                    defaultValue={image}
+                    register={register}
+                    errors={errors}
+                  />
+                </Col>
 
-          <Col lg="6">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Profile picture</Form.Label>
-              <Form.Control
-                className="shadow-none"
-                type="text"
-                defaultValue={image}
-                {...register("image")}
-                placeholder="Enter your image url"
-                isInvalid={errors?.image}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors?.image?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
+                <Col lg="12">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Profession</Form.Label>
 
-          <Col lg="6">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Profession</Form.Label>
+                    <Form.Select
+                      defaultValue={profession}
+                      isInvalid={errors?.profession}
+                      {...register("profession")}
+                      className="shadow-none"
+                    >
+                      <option value="">Select the profession</option>
+                      <option value="developer">Developer</option>
+                      <option value="designer">Designer</option>
+                      <option value="marketer">Marketer</option>
+                    </Form.Select>
 
-              <Form.Select
-                defaultValue={profession}
-                isInvalid={errors?.profession}
-                {...register("profession")}
-                className="shadow-none"
+                    <Form.Control.Feedback type="invalid">
+                      {errors?.profession?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+
+                <Col lg="12">
+                  <Form.Label>Date of birth</Form.Label>
+                  <DatePicker
+                    className="date_picker form-control shadow-none mb-3"
+                    selected={birthYear}
+                    onChange={(date) => setBirthYear(date)}
+                    name="dateOfBirth"
+                    showMonthDropdown
+                    showYearDropdown
+                    maxDate={new Date()}
+                  />
+                </Col>
+
+                <Col lg="12">
+                  <FormInput
+                    name="bio"
+                    type="text"
+                    as="textarea"
+                    label="Bio"
+                    placeholder="Enter your bio"
+                    defaultValue={bio}
+                    register={register}
+                    errors={errors}
+                  />
+                </Col>
+              </Row>
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={isSubmitting && "disabled"}
               >
-                <option value="">Select the profession</option>
-                <option value="developer">Developer</option>
-                <option value="designer">Designer</option>
-                <option value="marketer">Marketer</option>
-              </Form.Select>
-
-              <Form.Control.Feedback type="invalid">
-                {errors?.profession?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-
-          <Col lg="6">
-            <Form.Label>Date of birth</Form.Label>
-            <DatePicker
-              className="date_picker form-control shadow-none"
-              selected={birthYear}
-              onChange={(date) => setBirthYear(date)}
-              name="dateOfBirth"
-              showMonthDropdown
-              showYearDropdown
-              maxDate={new Date()}
-            />
-          </Col>
-
-          <Col lg="6">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Bio</Form.Label>
-              <Form.Control
-                as="textarea"
-                defaultValue={bio}
-                {...register("bio")}
-                placeholder="Enter your bio"
-                isInvalid={errors?.bio}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors?.bio?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+                {contact?.id ? "Update Contact" : "Add Contact"}
+              </Button>
+            </div>
           </Col>
         </Row>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={isSubmitting && "disabled"}
-        >
-          {contact?.id ? "Update Contact" : "Add Contact"}
-        </Button>
       </Form>
     </div>
   );

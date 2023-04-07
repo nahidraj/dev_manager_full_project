@@ -8,7 +8,6 @@ const EditContact = () => {
 
   const { id } = useParams();
   const foundContact = contacts.find((contact) => contact.id === id);
-  console.log(foundContact);
   return <ContactForm contact={foundContact} updateContact={updateContact} />;
 };
 

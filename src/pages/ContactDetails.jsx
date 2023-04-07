@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, ListGroup, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
-const ContactDetails = ({ contacts }) => {
+import { ContactContext } from "../context/ContactsContext";
+const ContactDetails = () => {
+  const { contacts } = useContext(ContactContext);
   const [contact, setContact] = useState({});
   const { id } = useParams();
   const foundContact = contacts.find((contact) => contact.id === id);
